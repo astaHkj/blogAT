@@ -1,62 +1,140 @@
-# Astro Starter Kit: Blog
+# BlogAT
 
-```sh
-npm create astro@latest -- --template blog
+A modern blog system built with **Nuxt 3** + **Express** + **MongoDB**.
+
+## Tech Stack
+
+### Frontend (client/)
+- **Nuxt 3** - Vue 3 SSR Framework
+- **TypeScript** - Type Safety
+- **TailwindCSS** - Utility-first CSS
+- **Pinia** - State Management
+
+### Backend (server/)
+- **Express 5** - Web Framework
+- **TypeScript** - Type Safety
+- **MongoDB** - Database (via Mongolass)
+- **JWT** - Authentication (httpOnly Cookie)
+- **bcrypt** - Password Hashing
+
+## Project Structure
+
+```
+blogAT/
+├── client/                 # Nuxt 3 Frontend
+│   ├── components/         # Vue Components
+│   ├── composables/        # Composables (useApi)
+│   ├── layouts/            # Page Layouts
+│   ├── middleware/         # Route Guards
+│   ├── pages/              # Page Components
+│   ├── stores/             # Pinia Stores
+│   └── types/              # TypeScript Types
+│
+├── server/                 # Express API
+│   └── src/
+│       ├── config/         # Configuration
+│       ├── lib/            # Database Connection
+│       ├── middlewares/    # Auth Middleware
+│       ├── models/         # Data Models
+│       ├── routes/         # API Routes
+│       └── types/          # TypeScript Types
+│
+├── docker-compose.yml      # Docker Deployment
+└── package.json            # Root Scripts
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Getting Started
 
-Features:
+### Prerequisites
+- Node.js >= 18
+- MongoDB (local or Atlas)
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+### Installation
 
-## 🚀 Project Structure
+```bash
+# Install all dependencies
+npm run install:all
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+# Or install separately
+npm install
+cd server && npm install
+cd ../client && npm install
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Development
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```bash
+# Start both server and client
+npm run dev
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+# Or start separately
+npm run dev:server   # http://localhost:4000
+npm run dev:client   # http://localhost:3000
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+### Production Build
 
-## 🧞 Commands
+```bash
+npm run build
+npm start
+```
 
-All commands are run from the root of the project, from a terminal:
+## API Endpoints
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Authentication
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register new user |
+| POST | `/api/auth/login` | User login |
+| POST | `/api/auth/logout` | User logout |
+| GET | `/api/auth/me` | Get current user |
 
-## 👀 Want to learn more?
+### Posts
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/posts` | Get all posts |
+| GET | `/api/posts/:id` | Get single post |
+| POST | `/api/posts` | Create post (auth) |
+| PUT | `/api/posts/:id` | Update post (auth) |
+| DELETE | `/api/posts/:id` | Delete post (auth) |
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Comments
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/posts/:id/comments` | Get post comments |
+| POST | `/api/posts/:id/comments` | Create comment (auth) |
+| DELETE | `/api/comments/:id` | Delete comment (auth) |
 
-## Credit
+### Upload
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/upload` | Upload file (auth) |
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+## Environment Variables
+
+### Server (.env)
+```env
+PORT=4000
+MONGODB_URI=mongodb://localhost:27017/blogat
+JWT_SECRET=your-secret-key
+CLIENT_URL=http://localhost:3000
+```
+
+### Client (.env)
+```env
+NUXT_PUBLIC_API_BASE=http://localhost:4000/api
+```
+
+## Docker Deployment
+
+```bash
+# Start with Docker Compose
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+```
+
+## License
+
+MIT
