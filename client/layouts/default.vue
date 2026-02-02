@@ -1,13 +1,55 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="art-layout">
     <AppHeader />
-    <main class="max-w-5xl mx-auto px-4 py-8">
+    <main class="art-main">
       <slot />
     </main>
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-      <div class="max-w-5xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
-        © 2024 BlogAT - Built with Nuxt 3 + Express
+    <footer class="art-footer">
+      <div class="container-art">
+        <div class="divider"></div>
+        <div class="footer-content">
+          <span class="footer-brand">BlogAT</span>
+          <span class="footer-divider">·</span>
+          <span class="text-sm text-secondary">艺术写作，诗意生活</span>
+        </div>
       </div>
     </footer>
   </div>
 </template>
+
+<style scoped>
+.art-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.art-main {
+  flex: 1;
+  padding: var(--space-xl) 0;
+}
+
+.art-footer {
+  padding: var(--space-lg) 0 var(--space-xl);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-family: var(--font-display);
+}
+
+.footer-brand {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-accent-terracotta);
+  letter-spacing: 0.1em;
+}
+
+.footer-divider {
+  color: var(--color-accent-gold);
+}
+</style>
